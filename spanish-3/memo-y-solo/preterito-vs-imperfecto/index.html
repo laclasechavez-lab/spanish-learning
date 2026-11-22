@@ -28,7 +28,7 @@
  const out=[];let pending=0;for(const chunk of String(text).replace(/\s*\/\s*/g,'. ').split(/(_{2,})/)){
  if(/^_{2,}$/.test(chunk)){pending+=blankPause;continue;}
  const words=wordPause?chunk.trim().split(/\s+/).filter(Boolean):[chunk.trim()].filter(Boolean);
- for(const word of words){if(out.length)out[out.length-1].delay=Math.max(out[out.length-1].delay,pending);else if(pending)out.push({text:'',delay:pending});pending=0;out.push({text:word,delay:wordPause+(wordPause?(/[.!?…]$/.test(word)?350:/[,;:]$/.test(word)?180:0):0)});}
+ for(const word of words){if(out.length)out[out.length-1].delay=Math.max(out[out.length-1].delay,pending);else if(pending)out.push({text:'',delay:pending});pending=0;out.push({text:wordPause&&words.length>1?word.replace(/^([¡¿(«“\"']*)y([.,;:!?…»”\"')]*)(?=$)/i,(_,lead,tail)=>lead+'i'+tail):word,delay:wordPause+(wordPause?(/[.!?…]$/.test(word)?350:/[,;:]$/.test(word)?180:0):0)});}
  }if(pending&&out.length)out[out.length-1].delay=Math.max(out[out.length-1].delay,pending);return out;
 }
 const originalSilentQuestion="Which statement about ayer is true?";
